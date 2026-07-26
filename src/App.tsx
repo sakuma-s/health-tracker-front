@@ -22,7 +22,7 @@ function App() {
     }
     setLoading(true)
     fetch(
-        `http://localhost:8080/records/search?keyword=${encodeURIComponent(keyword)}`,
+        `/records/search?keyword=${encodeURIComponent(keyword)}`,
         { credentials: 'include' }
     )
         .then((res) => res.json())
@@ -34,9 +34,12 @@ function App() {
         .finally(() => setLoading(false))
   }, [keyword])
 
-  return (
-      <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-        <h1>メモ検索</h1>
+    return (
+        <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
+            <button onClick={() => window.history.back()} style={{ marginBottom: '1rem' }}>
+                ← 戻る
+            </button>
+            <h1>メモ検索</h1>
         <div>
           <input
               type="text"
