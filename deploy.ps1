@@ -12,9 +12,9 @@ $cssFile = [regex]::Match($indexContent, 'assets/(index-[a-zA-Z0-9]+\.css)').Gro
 
 # list.htmlを読み込んで書き換え
 $listPath = "C:\projects\health-tracker\src\main\resources\templates\records\list.html"
-$listContent = Get-Content $listPath -Raw
+$listContent = Get-Content $listPath -Raw -Encoding UTF8
 $listContent = $listContent -replace 'assets/index-[a-zA-Z0-9]+\.js', "assets/$jsFile"
 $listContent = $listContent -replace 'assets/index-[a-zA-Z0-9]+\.css', "assets/$cssFile"
-Set-Content $listPath $listContent -NoNewline
+Set-Content $listPath $listContent -NoNewline -Encoding UTF8
 
 Write-Host "Done: JS=$jsFile CSS=$cssFile"
