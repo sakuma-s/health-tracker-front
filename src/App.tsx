@@ -23,21 +23,22 @@ function App() {
             return
         }
 
-        const timer = setTimeout(() => {
+        const timer = setTimeout(async () => {
             setLoading(true)
-            fetch(
-                `/records/search?keyword=${encodeURIComponent(keyword)}`,
-                { credentials: 'include' }
-            )
-                .then((res) => res.json())
-                .then((data: HealthRecord[]) => {
-                    setResults(data)
-                    setSearched(true)
-                })
-                .catch((e) => console.error(e))
-                .finally(() => setLoading(false))
+            try {
+                const res = await fetch(
+                    `/records/search?keyword=${encodeURIComponent(keyword)}`,
+                    {credentials: 'include'}
+                )
+                const data = await res.json()
+                setResults(data)
+                setSearched(true)
+            } catch (e) {
+                console.error(e)
+            } finally {
+                setLoading(false)
+            }
         }, 300)
-
         return () => clearTimeout(timer)
     }, [keyword])
     return (
