@@ -1,75 +1,33 @@
-# React + TypeScript + Vite
+# health-tracker-front
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 概要
+[health-tracker](https://github.com/sakuma-s/health-tracker)のフロントエンド機能（メモキーワードのリアルタイム検索）を担当するReact + TypeScriptプロジェクトです。
+health-tracker本体はThymeleafで動作しますが、リアルタイム検索機能のみ、このプロジェクトでビルドしたJS/CSSを組み込んでいます。
 
-Currently, two official plugins are available:
+## 仕様技術
+| カテゴリ | 技術 |
+|---|---|
+| フレームワーク | React 19, TypeScript |
+| ビルドツール | Vite |
+| Lint | ESLint |
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 機能
+- メモキーワードのリアルタイム検索
 
-## React Compiler
+## デプロイ方法
+`deploy.ps1`を実行すると、以下が自動で行われます。
+1. `npm run build`でビルド
+2. health-tracker側の静的ファイルを削除・コピー
+3. health-tracker側のlist.htmlのJS/CSSファイル名を最新のものに書き換え
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### なぜdeploy.ps1を作ったか
+Viteでビルドすると、キャッシュ対策のためファイル名にハッシュが自動付与され、
+ビルドのたびにファイル名が変わります。手作業でのコピー・書き換えは
+手順漏れのリスクがあり、繰り返しの作業に時間を取られていました。
+実装や設計を考える時間を確保するため、デプロイ作業をスクリプト化しました。
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+## 開発環境の構築
+```bash
+npm install
+npm run dev
 ```
