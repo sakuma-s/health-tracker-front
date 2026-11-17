@@ -5,7 +5,7 @@ type HealthRecord = {
     date: string
     memo: string
     fatigueLevel: number
-    sleepHours: number
+    sleepMinutes: number | null
 }
 
 function App() {
@@ -73,7 +73,10 @@ function App() {
                             <li key={record.id} className="border-bottom p-2">
                                 <small className="text-muted">{record.date}</small>
                                 <p className="mb-0 small">{record.memo}</p>
-                                <small className="text-muted">疲労度: {record.fatigueLevel} / 睡眠: {record.sleepHours}時間</small>
+                                <small className="text-muted">疲労度: {record.fatigueLevel} /
+                                    睡眠時間: {record.sleepMinutes == null
+                                        ? '未入力'
+                                        : `${Math.floor(record.sleepMinutes / 60)}時間${String(record.sleepMinutes % 60).padStart(2,'0')}分`}</small>
                             </li>
                         ))}
                     </ul>
